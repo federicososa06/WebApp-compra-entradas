@@ -1,0 +1,11 @@
+﻿@model TodasLasListas
+
+
+<p>Lista de clientes registrados:</p>
+
+@foreach (var c in Model.Usuarios)
+{
+    <div>
+        <p>@c.Nombre @c.Apellido</p>
+    </div>
+}

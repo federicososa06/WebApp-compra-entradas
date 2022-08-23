@@ -1,0 +1,108 @@
+﻿@model TodasLasListas
+
+    <!-- Dado el nombre de Lugar, listar todas las actividades que allí se realizan. -->
+    <div class="col">
+        <p>Buscar actividades por lugar</p>
+
+        <form method="post" action="@Url.Action("ActividadesPorLugar","Actividad")">
+
+            @Html.DropDownList("slcLugar", new SelectList(Model.Lugares, "Nombre", "Nombre"), new { Class = "form-control" })
+
+            <input type="submit" value="Mostrar" />
+
+        </form>
+    </div>
+
+    @if (Model.ActividadesPorLugar != null)
+    {
+        if (@ViewBag.ActividadNoEncontrada != null)
+        {
+            <p style="color:red">@ViewBag.ActividadNoEncontrada</p>
+        }
+        else
+        {
+
+            @foreach (var a in Model.ActividadesPorLugar)
+            {
+                <div class="col">
+                    <p>@a.Nombre</p>
+                </div>
+            }
+        }
+    }
+
+
+
+    <!-- Dadas dos fechas y una categoría listar todas las actividades que cumplan con el filtro.-->
+    <div>
+        <form method="post" action="@Url.Action("ActividadesPorCategoria","Actividad")">
+
+            <p>Buscar actividades por fecha</p>
+
+            <div class="col">
+
+                <p>Ingresar fecha de inicio</p>
+                <input type="date" id="fechaInicio" name="fechaInicio" />
+            </div>
+
+            <div class="col">
+
+                <p>Ingresar fecha final</p>
+                <input type="date" id="fechaFinal" name="fechaFinal" />
+            </div>
+
+            @Html.DropDownList("slcCategoria", new SelectList(Model.Categorias, "Id", "Nombre"), new { Class = "form-control" })
+
+            <div class="col">
+                <input type="submit" value="Mostrar" />
+            </div>
+
+        </form>
+    </div>
+
+
+    @if (Model.ActividadesPorFecha != null)
+    {
+
+        if (ViewBag.ActividadNoEncontrada != null)
+        {
+            <div>
+                <p style="color:red">@ViewBag.ActividadNoEncontrada</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var a in Model.ActividadesPorFecha)
+            {
+                <div class="col">
+                    <p>@a.Nombre</p>
+                </div>
+            }
+        }
+    }
+
+
+
+
+    <!-- Obtener las compras de mayor valor. En caso de empate mostar todas las empatadas.-->
+
+    <div class="col">
+
+        <input type="button" class="btn btn-primary" value="Mostrar mayores compras" onclick="MostrarDivMayoresCompras()" />
+
+        <div id="divMayoresCompras" style="display:none">
+            <p>Compras de más valor:</p>
+            @foreach (var c in Model.MayoresCompras)
+            {
+                <p>@c.Actividad.Nombre, precio final: $@c.CalcularPrecioFinal()</p>
+            }
+        </div>
+
+    </div>
+
+    <script>
+        function MostrarDivMayoresCompras() {
+            document.getElementById("divMayoresCompras").style.display = "inline";
+        }
+
+    </script>

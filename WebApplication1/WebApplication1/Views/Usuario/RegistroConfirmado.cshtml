@@ -1,0 +1,16 @@
+﻿@model Obligatorio.Usuario
+
+<div>
+    <h1 >Usuario creado</h1>
+
+    <p>@Model.Nombre</p>
+    <p>@Model.Apellido</p>
+    <p>@Model.Email</p>
+    <p>@Model.NombreUsuario</p>
+    <p>@Model.TipoUsuario</p>
+
+    <p> inicie sesion para continuar </p>
+
+    <a class="btn btn-primary " asp-area="" asp-controller="Usuario" asp-action="Index">Iniciar Sesión </a>
+
+</div>

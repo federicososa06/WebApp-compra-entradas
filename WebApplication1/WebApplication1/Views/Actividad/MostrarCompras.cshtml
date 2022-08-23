@@ -1,0 +1,53 @@
+﻿@model List<Obligatorio.Compra>
+
+<label>Aca se le muestran todas las compras al operador </label>
+
+<form method="post">
+
+    <div class="col">
+
+        <p>Ingresar fecha de inicio</p>
+        <input type="date" id="fechaInicio" name="fechaInicio" />
+    </div>
+
+    <div class="col">
+
+        <p>Ingresar fecha final</p>
+        <input type="date" id="fechaFinal" name="fechaFinal" />
+    </div>
+
+    <div class="col">
+        <input type="submit" value="Mostrar" />
+    </div>
+
+</form>
+
+
+<div>
+
+    @if (Model != null)
+    {
+
+        if (ViewBag.CompraEncontrada != null)
+        {
+            <div>
+                <p style="color:red">@ViewBag.CompraEncontrada</p>
+            </div>
+        }
+        else
+        {
+            <div>
+                <p>Compras para las fechas seleccionadas</p>
+            </div>
+
+            @foreach (var c in Model)
+            {
+                <div class="col">
+                    <p>Actividad: @c.Actividad.Nombre, precio final: $@c.CalcularPrecioFinal()</p>
+                </div>
+            }
+        }
+    }
+
+</div>
+

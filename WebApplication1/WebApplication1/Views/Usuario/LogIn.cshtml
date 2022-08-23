@@ -1,0 +1,31 @@
+﻿<div class="text-center">
+
+    <h1 style="color:blue"> Log In </h1>
+
+    <form method="post">
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label>Email</label>
+                @Html.TextBox("emailCampo", "", new { Class = "form-control" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label>Contraseña</label>
+                @Html.Password("contraseniaCampo", "", new { Class = "form-control" })
+            </div>
+        </div>
+
+        @if (ViewBag.Msg != null)
+        {
+            <label style="color:red">@ViewBag.Msg</label><br />
+        }
+
+        <div>
+            <input type="submit" value="LogIn" class="btn btn-primary" />
+        </div>
+
+    </form>
+</div>

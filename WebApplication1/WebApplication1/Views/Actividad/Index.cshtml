@@ -1,0 +1,77 @@
+﻿@model TodasLasListas
+@using Microsoft.AspNetCore.Http
+
+<div class="container-fluid text-center">
+
+    <h1 class="display-4">Lista de Actividades</h1>
+
+    <table class="col table table-striped">
+        <tr class="disabled">
+            <th>Actividad</th>
+            <th>Categoria</th>
+            <th>Edad mínima</th>
+            <th>Lugar </th>
+            <th>Fecha</th>
+            <th>Precio por entrada</th>
+            <th>Likes</th>
+
+            @if (Context.Session.GetInt32("tipoUser") == 1)
+            {
+                <th>Comprar</th>
+                <th> Me gusta</th>
+            }
+
+        </tr>
+
+        @foreach (var a in Model.Actividades)
+        {
+            <tr>
+                <td>
+                    <label>@a.Nombre</label>
+                </td>
+                <td>
+                    <label>@a.Categoria.Nombre</label>
+                </td>
+                <td>
+                    <label>@a.EdadMinima</label>
+                </td>
+                <td>
+                    <label>@a.Lugar.Nombre</label>
+                </td>
+                <td>
+                    <label>@a.FechaHora</label>
+                </td>
+                <td>
+                    <label>@a.PrecioFinal()</label>
+                </td>
+                <td>
+                    <label>@a.MeGusta</label>
+                </td>
+
+                @if (Context.Session.GetInt32("tipoUser") == 1)
+                {
+
+                    <td>
+
+                        @Html.ActionLink("Comprar", "ComprarEntrada", new { idActividadSeleccionada = a.Id, Class = "btn btn-primary" })
+                    </td>
+
+                    <td>
+
+                        @Html.ActionLink("Like", "DarMeGusta", new { idActividadSeleccionada = a.Id, Class = "btn btn-primary" })
+                    </td>
+
+                    if (@ViewBag.IdMeGusta == a.Id)
+                    {
+
+                        <td>@ViewBag.MeGustaMsg</td>
+                    }
+                }
+
+            </tr>
+
+        }
+
+    </table>
+
+</div>

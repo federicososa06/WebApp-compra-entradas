@@ -1,0 +1,76 @@
+﻿@model List<Obligatorio.Compra>
+
+<div class="text-center">
+
+    <h1 class="display-4">Compras</h1>
+
+
+    <table class="col table table-striped">
+        <tr>
+            <th>Actividad</th>
+            <th>Cant. Entradas</th>
+            <th>Precio Entrada</th>
+            <th>Precio Final </th>
+            <th>Fecha</th>
+            <th>Estado</th>
+
+        </tr>
+
+        @foreach (var c in Model)
+        {
+            <tr>
+
+                @if (c.Activa)
+                {
+
+                    @if (c.Actividad.FechaHora > DateTime.Now)
+                    {
+                        // actividad próximas
+
+                        <td>@c.Actividad.Nombre</td>
+                        <td> @c.CantidadEntradas</td>
+                        <td> @c.PrecioFinal</td>
+                        <td> @c.CalcularPrecioFinal()</td>
+                        <td>@c.Actividad.FechaHora</td>
+
+                        @if (c.Actividad.FechaHora > DateTime.Now.AddDays(1))
+                        {
+                            <td> @Html.ActionLink("Cancelar", "CancelarCompra", new { idCompra = c.Id, Class = "btn btn-primary" }) </td>
+                        }
+                        else
+                        {
+                            <td>No es posible anular</td>
+                        }
+
+                    }
+                    else
+                    {
+                        // actividad pasada
+
+                        <td>@c.Actividad.Nombre </td>
+                        <td> @c.CantidadEntradas  </td>
+                        <td> @c.PrecioFinal </td>
+                        <td> @c.CalcularPrecioFinal()</td>
+                        <td>@c.Actividad.FechaHora </td>
+                        <td>Finalizada </td>
+                    }
+                }
+                else
+                {
+                    // actividad cancelada
+
+                    <td>@c.Actividad.Nombre </td>
+                    <td>@c.CantidadEntradas</td>
+                    <td> @c.PrecioFinal</td>
+                    <td> @c.CalcularPrecioFinal() </td>
+                    <td>@c.Actividad.FechaHora </td>
+                    <td>Cancelada </td>
+
+                }
+            </tr>
+
+        }
+
+    </table>
+
+</div>

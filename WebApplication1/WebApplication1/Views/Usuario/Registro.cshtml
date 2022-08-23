@@ -1,0 +1,166 @@
+﻿
+
+<div class="text-center">
+    <h1 style="color:blue"> Registrarse </h1>
+
+
+    <form method="post" id="registroFormSubmit">
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label>Nombre</label>
+                <input type="text" name="nombreRegistro" id="nombreRegistro" />
+
+                <label id="nombreRegistroVacio" style="color:red; display: none">*El nombre debe ser mayor a 2 caracteres</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label>Apellido</label>
+                <input type="text" name="apellidoRegistro" id="apellidoRegistro" />
+
+                <label id="apellidoRegistroVacio" style="color:red; display:none">*El apellido debe ser mayor a 2 caracteres</label>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label>Fecha Nacimiento</label>
+                <input type="date" name="fechaRegistro" id="fechaRegistro" />
+
+                <label id="fechaRegistroVacio" style="color:red; display: none">*Este campo no puede estar vacío</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label>Email</label>
+                <input type="email" name="emailRegistro" id="emailRegistro" required />
+
+                <label id="emailRegistroVacio" style="color:red; display: none">*Este campo no puede estar vacío</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label>Nombre de usuario</label>
+                <input type="text" name="usuarioRegistro" id="usuarioRegistro" required />
+
+                <label id="usuarioRegistroVacio" style="color:red; display: none">*Este campo no puede estar vacío</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label>Contraseña</label>
+                <input type="password" name="contraseniaRegistro" id="contraseniaRegistro" required />
+
+                <label id="contraseniaRegistroVacio" style="color:red; display: none">*La contraseña debe contener al menos 6 caracteres, una mínuscula, una mayúscula y un dígito</label>
+            </div>
+        </div>
+
+        @if (ViewBag.ExisteUsuario != null)
+        {
+            <label style="color:red">@ViewBag.ExisteUsuario</label><br />
+        }
+
+
+        <input type="button" onclick="VerificarValores()" value="Registro" class="btn btn-primary" />
+
+    </form>
+
+
+
+
+
+</div>
+
+
+<script>
+
+
+    function VerificarValores() {
+        var nombre = document.getElementById("nombreRegistro").value;
+        var apellido = document.getElementById("apellidoRegistro").value
+        var password = document.getElementById("contraseniaRegistro").value;
+        var usuario = document.getElementById("usuarioRegistro").value;
+        var email = document.getElementById("emailRegistro").value;
+        var fecha = document.getElementById("fechaRegistro").value;
+
+        if (nombre.length <= 2) {
+            //document.getElementById("nombreRegistroVacio").style.display = inline;
+            alert("El nombre debe tener mas de 2 caracteres");
+            return;
+        }
+
+        if (apellido.length <= 2) {
+           // document.getElementById("apellidoRegistroVacio").style.display = block;
+            alert("El apellido debe tener mas de 2 caracteres");
+            return;
+        }
+
+        if (fecha == "") {
+          // document.getElementById("fechaRegistroVacio").style.display = block;
+            alert("Debe ingresar una fecha");
+            return;
+        }
+
+        let passwordValido = validarPassword(password)
+        if (!passwordValido) {
+            //document.getElementById("constraseniaRegistroVacio").style.display = block;
+            alert("El password debe tener mas de 6 caracteres, una mayuscula y una minuscula");
+            return;
+        }
+
+
+        if (usuario == "") {
+            //document.getElementById("usuarioRegistroVacio").style.display = block;
+            alert("El usuario no puede estar vacío");
+            return;
+        }
+
+        if (email == "") {
+            //document.getElementById("emailRegistroVacio").style.display = block;
+            alert("El email no puede estar vacío");
+            return;
+        }
+
+        document.getElementById("registroFormSubmit").submit();
+
+    }
+
+
+    //validar Password, si tiene mayuscula, minuscula y un digito al menos.
+    function validarPassword(unPassword) {
+
+        let ret = false;
+        let mayuscula = false;
+        let minuscula = false;
+        let numero = false;
+
+        if (unPassword.length >= 6) {
+            for (let i = 0; i < unPassword.length; i++) {
+                let valor = unPassword.charCodeAt(i)
+                if (65 <= valor && 90 >= valor) {
+                    mayuscula = true;
+                }
+                if (97 <= valor && 122 >= valor) {
+                    minuscula = true;
+                }
+                if (48 <= valor && 57 >= valor) {
+                    numero = true;
+                }
+            }
+        }
+
+        if (mayuscula && minuscula  && numero ) {
+            ret = true;
+        }
+
+        return ret;
+    }
+
+</script>
+

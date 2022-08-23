@@ -1,0 +1,76 @@
+﻿@model Obligatorio.Actividad
+@using Microsoft.AspNetCore.Http
+
+
+
+<div class="text-center">
+    <h1 style="color:blue"> Comprar entradas </h1>
+
+
+    <form method="post" id="formSubmit">
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label >Actividad: @Model.Nombre</label>
+                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label >Email: @Context.Session.GetString("username") </label>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label >@Model.FechaHora</label>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label>Precio por entrada: @Model.PrecioFinal() </label>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-4 form-group">
+                <label>Cantidad de entradas</label>
+                <input type="number" id="cantidadCampo" name="cantidadCampo" Class="form-control" />
+
+                <label id="cantidadVacio" style="color:red; display: none">*Selecciona una cantidad válida</label>
+            </div>
+        </div>
+
+        @Html.Hidden("idActividad", Model.Id)
+
+        <input type="button" onclick="VerificarValores()" value="Comprar" class="btn btn-primary" />
+
+    </form>
+
+</div>
+
+
+
+<script>
+
+
+    function VerificarValores() {
+
+        var cantidad = document.getElementById("cantidadCampo").value;
+
+
+        if (cantidad <= 0) {
+            document.getElementById("cantidadVacio").style.display = "inline";
+            return;
+        }
+
+        document.getElementById("formSubmit").submit();
+    }
+
+</script>
